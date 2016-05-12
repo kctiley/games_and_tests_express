@@ -1,7 +1,8 @@
 var computerMarker = " X ";
 var userMarker  = " O ";
 var blank = "[ ]";
-// var Board = require('./board');
+
+var Board = require('./board');
 
 function Game (){
   this.lastMove = {player : null, position : null};
@@ -115,4 +116,4 @@ Game.prototype.nextPlayerGo = function(){
 }
 
 
-// module.exports = Game;
+module.exports = Game;

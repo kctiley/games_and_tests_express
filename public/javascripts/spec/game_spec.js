@@ -2,8 +2,8 @@ var Game = require('../src/game');
 var Board = require('../src/board');
 // var User = require('../src/user');
 // var Computer = require('../src/computer');
-var x = " X ";
-var o  = " O ";
+var computerMarker = " X ";
+var userMarker  = " O ";
 var blank = "[ ]";
 
   describe('Game', function () {
@@ -45,63 +45,67 @@ var blank = "[ ]";
         expect(game.availablePositions()).toEqual(allPositions);
       });
 
-      it('should check for a win for x', function () {
+      it('should check for a win for computerMarker', function () {
         var allPositions = [];
-        game.board.positions.topLeft.marker = x;
-        game.board.positions.center.marker = x;
-        game.board.positions.bottomRight.marker = x;
+        game.board.positions.topLeft.marker = computerMarker;
+        game.board.positions.center.marker = computerMarker;
+        game.board.positions.bottomRight.marker = computerMarker;
 
-        expect(game.checkForWinner()).toEqual(x);
+        expect(game.checkForWinner()).toEqual(computerMarker);
       });
 
-      it('should check for a win for o', function () {
+      it('should check for a win for userMarker', function () {
         var allPositions = [];
-        game.board.positions.topCenter.marker = o;
-        game.board.positions.center.marker = o;
-        game.board.positions.bottomCenter.marker = o;
+        game.board.positions.topCenter.marker = userMarker;
+        game.board.positions.center.marker = userMarker;
+        game.board.positions.bottomCenter.marker = userMarker;
 
-        expect(game.checkForWinner(game.board)).toEqual(o);
+        expect(game.checkForWinner(game.board)).toEqual(userMarker);
       });
 
       it('should set last move data', function () {
-        game.setMove(o, "topLeft");
-        game.setMove(x, "center");
+        game.start();
+        game.setMove(userMarker, "topLeft");
+        game.setMove(computerMarker, "center");
 
-        expect(game.lastMove).toEqual({player : x, position : "center"});
+        expect(game.lastMove).toEqual({player : computerMarker, position : "center"});
       });
 
-      it('should set current player to o if last player was x', function () {
-        game.setMove(x, "center");
-        // spyOn(game, 'promptUser');
+      it('should set current player to userMarker if last player was computerMarker', function () {
+        game.start();
+        game.setMove(computerMarker, "center");
 
-        // expect(game.promptUser).toHaveBeenCalled();
-        expect(game.currentPlayer).toEqual(o);
+        expect(game.currentPlayer).toEqual(userMarker);
       })
       
-      it('should set current player to x if last player was o', function () {
-        game.setMove(o, "bottomCenter");
+      it('should set current player to computerMarker if last player was userMarker', function () {
+        game.start();
+        game.setMove(userMarker, "bottomCenter");
 
-        expect(game.currentPlayer).toEqual(x);
+        expect(game.currentPlayer).toEqual(computerMarker);
       })
 
       it('should determine if move is valid', function () {
-        game.setMove(o, "bottomCenter");
+        game.start();
+        game.setMove(userMarker, "bottomCenter");
 
-        expect(game.moveIsValid(o,'bottomCenter')).toEqual(false);
+        expect(game.moveIsValid(userMarker,'bottomCenter')).toEqual(false);
       })
 
       it('should determine if move is valid', function () {
-        game.setMove(o, "bottomCenter");
+        game.start();
+        game.setMove(userMarker, "bottomCenter");
 
-        expect(game.moveIsValid(x, 'center')).toEqual(true);
+        expect(game.moveIsValid(computerMarker, 'center')).toEqual(true);
       })
 
       it('should not proceed to next player if move selected was not valid', function () {
-        game.setMove(o, 'middleRight');
-        game.setMove(x,"bottomCenter");
-        game.setMove(o, "bottomCenter");
+        game.start();
+        game.setMove(userMarker, 'middleRight');
+        game.setMove(computerMarker,"bottomCenter");
+        game.setMove(userMarker, "bottomCenter");
 
-        expect(game.currentPlayer).toEqual(o);
+        expect(game.currentPlayer).toEqual(userMarker);
       })
 
 

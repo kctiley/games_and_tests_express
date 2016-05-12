@@ -94,4 +94,4 @@ Board.prototype.setMarker = function(position, playerMarker){
 
 
 
-  // module.exports = Board;
+  module.exports = Board;

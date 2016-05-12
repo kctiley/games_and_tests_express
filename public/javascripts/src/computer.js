@@ -1,7 +1,8 @@
 var computerMarker = " X ";
 var userMarker  = " O ";
 var blank = "[ ]";
-// var Board = require('./board');
+
+var Board = require('./board');
 
 
 function Computer (){
@@ -99,7 +100,7 @@ Computer.prototype.userWinMoves = function(board){
 }
 
 Computer.prototype.computerForkMoves = function(board){
-  var moves = this.availableTwoInRowMoves(board, x)
+  var moves = this.availableTwoInRowMoves(board, computerMarker)
   var result = [];
   var movesCount = {};
   for (position in moves){
@@ -156,11 +157,11 @@ Computer.prototype.oppositeCorner = function(board){
       availablePositions.push(position);
     }
   }
-  if(availablePositions.length == 7 && board.positions.center.marker == o){
-    if(board.positions.topLeft.marker == x){ result.push('bottomRight')}
-    if(board.positions.topRight.marker == x){ result.push('bottomLeft')}
-    if(board.positions.bottomRight.marker == x){ result.push('topLeft')}
-    if(board.positions.bottomLeft.marker == x){ result.push('topRight')}
+  if(availablePositions.length == 7 && board.positions.center.marker == userMarker){
+    if(board.positions.topLeft.marker == computerMarker){ result.push('bottomRight')}
+    if(board.positions.topRight.marker == computerMarker){ result.push('bottomLeft')}
+    if(board.positions.bottomRight.marker == computerMarker){ result.push('topLeft')}
+    if(board.positions.bottomLeft.marker == computerMarker){ result.push('topRight')}
   }
 
   return result;
@@ -229,4 +230,4 @@ Computer.prototype.selectMove = function(board){
 
 
 
-// module.exports = Computer;
+module.exports = Computer;

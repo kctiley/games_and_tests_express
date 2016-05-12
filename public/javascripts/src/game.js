@@ -8,33 +8,16 @@ function Game (){
   this.currentPlayer = null;
   this.status = "inActive";
   this.board = new Board();
-  //this.startButton = document.getElementById('start-button');
   this.showStartButton = true;
   this.message = false;
 }
 
 Game.prototype.start = function(){
   this.showStartButton = false;
-  // this.startButton.style.display = "none";
   this.currentPlayer = o;
   this.status = "active";
   this.message = false;
-  // this.clearMessage();
   this.board = new Board();
-  // this.updateBoard(); 
-}
-
-Game.prototype.message = function(message){
-  console.log(message);
-  document.getElementById('message').style.display = "block";
-  document.getElementById('message').innerHTML = message;
-  document.getElementById('board-container').style.opacity = .15;
-}
-
-Game.prototype.clearMessage = function(){
-  document.getElementById('message').style.display = "none";
-  document.getElementById('message').innerHTML = "";
-  document.getElementById('board-container').style.opacity = 1.0;
 }
 
 Game.prototype.availablePositions = function(){
@@ -112,32 +95,15 @@ Game.prototype.setMove = function(player, position){
   this.updateGame();
 }
 
-// Game.prototype.updateBoard = function(){
-//   for(position in this.board.positions){
-//     var element = document.getElementById(position);
-//     if(this.board.positions[position].marker !== blank){
-//       element.innerHTML = this.board.positions[position].marker;
-//     }
-//     else{
-//       element.innerHTML = "";
-//     }
-//   }
-// }
-
 Game.prototype.updateGame = function(){
-  // this.updateBoard()
   if(this.checkForWinner()){
     var winner = this.checkForWinner();
-    // this.message("Winner is " + winner + "!!");
     this.status = "inActive";
-    // this.startButton.style.display = "inline-block";
     this.showStartButton = true;
     this.message = "Winner is " + winner + "!!";
   }
   else if(this.availablePositions(this.board).length == 0){
-    // this.message("Tie.");
     this.status = "inActive";
-    // this.startButton.style.display = "inline-block";
     this.showStartButton = true;
     this.message = "Tie.";
   }

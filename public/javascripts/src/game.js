@@ -1,5 +1,5 @@
-var x = " X ";
-var o  = " O ";
+var computerMarker = " X ";
+var userMarker  = " O ";
 var blank = "[ ]";
 // var Board = require('./board');
 
@@ -14,7 +14,7 @@ function Game (){
 
 Game.prototype.start = function(){
   this.showStartButton = false;
-  this.currentPlayer = o;
+  this.currentPlayer = userMarker;
   this.status = "active";
   this.message = false;
   this.board = new Board();
@@ -46,10 +46,8 @@ Game.prototype.checkForWinner = function(){
       }
 
       if(board.positions[position].marker == mkr){
-            //check for neighbors
         var checkNeighbors = function(position, direction){
           if(board.positions[position].neighbors[direction]){
-            // console.log(board.positions[board.positions[position].neighbors[direction]])
             if(board.positions[board.positions[position].neighbors[direction]].marker == mkr){
               objCount[direction].same++;
               checkNeighbors(board.positions[position].neighbors[direction], direction);
@@ -79,8 +77,8 @@ Game.prototype.checkForWinner = function(){
       } 
     }
   }
-  check(x);
-  check(o);
+  check(computerMarker);
+  check(userMarker);
   return winner;
 }
 
@@ -113,7 +111,9 @@ Game.prototype.updateGame = function(){
 }
 
 Game.prototype.nextPlayerGo = function(){
-  this.lastMove.player == o ? this.currentPlayer = x : this.currentPlayer = o;
+  this.lastMove.player == userMarker ? this.currentPlayer = computerMarker : this.currentPlayer = userMarker;
 }
+
+o
 
 // module.exports = Game;

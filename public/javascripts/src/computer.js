@@ -1,5 +1,5 @@
-var x = " X ";
-var o  = " O ";
+var computerMarker = " X ";
+var userMarker  = " O ";
 var blank = "[ ]";
 // var Board = require('./board');
 
@@ -54,7 +54,7 @@ Computer.prototype.neighborDirectionData = function(board, playerMarker){
 
 Computer.prototype.computerWinMoves = function(board){
   var result = [];
-  var availablePositions = this.neighborDirectionData(board, x);
+  var availablePositions = this.neighborDirectionData(board, computerMarker);
   for (position in availablePositions){
     var pstn = availablePositions[position]
     if(pstn){
@@ -77,7 +77,7 @@ Computer.prototype.computerWinMoves = function(board){
 
 Computer.prototype.userWinMoves = function(board){
   var result = [];
-  var availablePositions = this.neighborDirectionData(board, o);
+  var availablePositions = this.neighborDirectionData(board, userMarker);
   for (position in availablePositions){
     var pstn = availablePositions[position]
     if(pstn){
@@ -112,7 +112,7 @@ Computer.prototype.computerForkMoves = function(board){
 }
 
 Computer.prototype.userForkMoves = function(board){
-  var moves = this.availableTwoInRowMoves(board, o)
+  var moves = this.availableTwoInRowMoves(board, userMarker)
   var result = [];
   var movesCount = {};
   for (position in moves){
@@ -184,7 +184,7 @@ Computer.prototype.doesNotForceFork = function(filterPositions, board){
   var board = board;
   filterPositions.forEach(function(filterPosition){
     var tempBoard = new Board(board.positions);
-    tempBoard.setMarker(filterPosition, x);
+    tempBoard.setMarker(filterPosition, computerMarker);
     var winMoves = computer1.computerWinMoves(tempBoard);
     var userForkMoves = computer1.userForkMoves(tempBoard);
     if(winMoves.length > 0){ 
@@ -202,7 +202,6 @@ Computer.prototype.doesNotForceFork = function(filterPositions, board){
 }
 
 Computer.prototype.selectMove = function(board){
-  console.log("in selectMove")
   var result;
   if(this.computerWinMoves(board).length > 0){
     result = this.computerWinMoves(board)[0];
@@ -225,7 +224,6 @@ Computer.prototype.selectMove = function(board){
   else if(this.doesNotForceFork(this.availableSides(board), board).length > 0){result = this.doesNotForceFork(this.availableSides(board), board)[0];
   }
   else {console.log("not coded")}
-    console.log(result)
   return result;
 }
 

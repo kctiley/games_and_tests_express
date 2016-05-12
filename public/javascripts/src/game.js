@@ -114,6 +114,5 @@ Game.prototype.nextPlayerGo = function(){
   this.lastMove.player == userMarker ? this.currentPlayer = computerMarker : this.currentPlayer = userMarker;
 }
 
-o
 
 // module.exports = Game;

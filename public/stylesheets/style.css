@@ -1,0 +1,67 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+
+}
+
+a {
+  color: #00B7FF;
+}
+
+body {
+    font-family: 'Crafty Girls', cursive; 
+    text-align: center;
+    background-image: url("../images/match.jpg");
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+  }
+
+  #board-container {
+    margin-top: 20%;
+    display: inline-block;
+    width: 50vh;
+    height: 50vh;
+    background-image: url("../images/cross-board.png");
+    background-size: cover;
+
+  }
+  .board-slot {
+    display: inline-block;
+    vertical-align: top;
+    width: 30%;
+    height: 30%;
+    font-size: 14vh;
+  }
+
+  .controls {
+    display: block;
+    width: 100%;
+    margin-top: 0;
+    text-align: center;
+  }
+
+  #start-button {
+    display: inline-block;
+    background-color: gray;
+    color: white;
+    border-radius: .5em;
+    font-size: 1.6em;
+    padding: 4px;
+  }
+
+  #start-button:hover {
+    cursor: pointer;
+  }
+
+  .alerts {
+    width: 100%;
+    position: absolute;
+    text-align: center;
+    margin-top: -20%;
+
+  }
+
+  #win-message, #tie-message {
+    display: none;
+    font-size: 46px;
+  }

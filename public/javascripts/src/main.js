@@ -1,5 +1,5 @@
-var x = " X ";
-var o  = " O ";
+var computerMarker = " X ";
+var userMarker  = " O ";
 var blank = "[ ]";
 
 // var Board = require('./board');
@@ -45,6 +45,6 @@ setInterval(function(){
 }, 100);
 
 setInterval(function(){ 
-  if(game.status != "inActive" && game.currentPlayer == x){
-  game.setMove(x, computerPlayer.selectMove(game.board))};
+  if(game.status != "inActive" && game.currentPlayer == computerMarker){
+  game.setMove(computerMarker, computerPlayer.selectMove(game.board))};
 }, 1000);

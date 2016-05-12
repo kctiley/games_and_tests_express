@@ -1,4 +1,4 @@
-function Board(existingBoardPositions) {
+var Board = function (existingBoardPositions) {
   var blank = "[ ]";
 // changing board creation
     this.positions = {
@@ -94,4 +94,5 @@ Board.prototype.setMarker = function(position, playerMarker){
 
 
 
-  module.exports = Board;
+if(typeof exports !== 'undefined'){ exports['board'] = Board}
+  

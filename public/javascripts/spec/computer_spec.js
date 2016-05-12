@@ -5,22 +5,26 @@ var blank = "[ ]";
 var Computer = require('../src/computer');
 var Board = require('../src/board');
 
+var requiredObjComputer = require('../src/computer');
+var Computer = requiredObjComputer.computer;
+var requiredObjBoard = require('../src/board');
+var Board = requiredObjBoard.board;
+
 describe('Computer', function () {
   var computer;
   beforeEach(function(){
     computer = new Computer();
+    board = new Board();
   })
     
   describe('methods', function () {
     describe('finds available side moves', function () {
       it('all sides are available initially', function () {
-        var board = new Board();
         computer.selectMove(board);
         expect(computer.availableSides(board)).toEqual(['topCenter', 'middleRight', 'bottomCenter', 'middleLeft']);
       });
 
       it('determines only available side moves', function () {
-        var board = new Board();
         computer.selectMove(board);
         board.setMarker('topCenter', computerMarker);
         expect(computer.availableSides(board)).toEqual(['middleRight', 'bottomCenter', 'middleLeft']);
@@ -30,13 +34,11 @@ describe('Computer', function () {
 
     describe('finds available corner move', function () {
       it('all corners are available initially', function () {
-        var board = new Board();
         computer.selectMove(board);
         expect(computer.availableCorners(board)).toEqual(['topLeft', 'topRight', 'bottomRight', 'bottomLeft']);
       });
 
       it('finds only available corner moves', function () {
-        var board = new Board();
         computer.selectMove(board);
         board.setMarker('topLeft', computerMarker);
         expect(computer.availableCorners(board)).toEqual(['topRight', 'bottomRight', 'bottomLeft']);
@@ -46,13 +48,11 @@ describe('Computer', function () {
 
     describe('finds available center move', function () {
       it('center available initially', function () {
-        var board = new Board();
         computer.selectMove(board);
         expect(computer.availableCenter(board)).toEqual(['center']);
       });
 
       it('finds only available center move', function () {
-        var board = new Board();
         computer.selectMove(board);
         board.setMarker('center', computerMarker);
         expect(computer.availableCenter(board)).toEqual([]);
@@ -62,32 +62,27 @@ describe('Computer', function () {
 
     describe('finds available moves that make two in a row', function () {
       it('initially has no moves that make two in a row', function () {
-        var board = new Board();
         expect(computer.availableTwoInRowMoves(board, computerMarker)).toEqual([]);
       });
 
       it('finds horizontal moves that make two in a row', function () {
-        var board = new Board();
         board.setMarker('middleLeft', computerMarker);
         expect(computer.availableTwoInRowMoves(board, computerMarker)).toContain('middleRight');
       });
 
       it('finds horizontal moves that make two in a row', function () {
-        var board = new Board();
         board.setMarker('topLeft', computerMarker);
         expect(computer.availableTwoInRowMoves(board, computerMarker)).toContain('topRight');
         expect(computer.availableTwoInRowMoves(board, computerMarker)).toContain('topCenter');
       });
 
       it('finds vertical moves that make two in a row', function () {
-        var board = new Board();
         board.setMarker('topLeft', computerMarker);
         expect(computer.availableTwoInRowMoves(board, computerMarker)).toContain('middleLeft');
         expect(computer.availableTwoInRowMoves(board, computerMarker)).toContain('bottomLeft');
       });
 
       it('finds diagonal moves that make two in a row', function () {
-        var board = new Board();
         board.setMarker('topLeft', computerMarker);
         expect(computer.availableTwoInRowMoves(board, computerMarker)).toContain('center');
         expect(computer.availableTwoInRowMoves(board, computerMarker)).toContain('bottomLeft');
@@ -98,7 +93,6 @@ describe('Computer', function () {
     describe('finds available moves that block user forks', function () {
 
       it('finds moves that block a fork', function () {
-        var board = new Board();
         board.setMarker('topLeft', userMarker);
         board.setMarker('bottomRight', userMarker);
 
@@ -107,7 +101,6 @@ describe('Computer', function () {
       });
 
       it('finds moves that block user fork', function () {
-        var board = new Board();
         board.setMarker('topCenter', userMarker);
         board.setMarker('bottomRight', userMarker);
 
@@ -122,7 +115,6 @@ describe('Computer', function () {
     describe('finds available moves that create computer fork', function () {
 
       it('finds available moves that create computer fork', function () {
-        var board = new Board();
         board.setMarker('topLeft', computerMarker);
         board.setMarker('bottomRight', computerMarker);
 
@@ -131,7 +123,6 @@ describe('Computer', function () {
       });
 
       it('finds available moves that create computer fork', function () {
-        var board = new Board();
         board.setMarker('bottomLeft', computerMarker);
         board.setMarker('topRight',computerMarker);
 
@@ -140,7 +131,6 @@ describe('Computer', function () {
       });
 
       it('finds available moves that create computer fork', function () {
-        var board = new Board();
         board.setMarker('topCenter', computerMarker);
         board.setMarker('bottomRight',computerMarker);
 
@@ -155,7 +145,6 @@ describe('Computer', function () {
     describe('finds available moves that block user win moves', function () {
 
         it('finds user win moves in middle of diagonal', function () {
-          var board = new Board();
           board.setMarker('topLeft', userMarker);
           board.setMarker('bottomRight', userMarker);
 
@@ -163,7 +152,6 @@ describe('Computer', function () {
         });
 
       it('finds user win moves middle of horizontal', function () {
-        var board = new Board();
         board.setMarker('middleLeft', userMarker);
         board.setMarker('middleRight', userMarker);
 
@@ -171,7 +159,6 @@ describe('Computer', function () {
       });
 
       it('finds user win moves left side of horizontal', function () {
-        var board = new Board();
         board.setMarker('center', userMarker);
         board.setMarker('middleRight', userMarker);
 
@@ -183,7 +170,6 @@ describe('Computer', function () {
     describe('finds available computer win moves', function () {
 
       it('finds computer win moves in middle of diagonal row', function () {
-        var board = new Board();
         board.setMarker('topLeft', computerMarker);
         board.setMarker('bottomRight', computerMarker);
 
@@ -191,7 +177,6 @@ describe('Computer', function () {
       });
 
       it('finds computer win moves middle of horizontal row', function () {
-        var board = new Board();
         board.setMarker('middleLeft', computerMarker);
         board.setMarker('middleRight', computerMarker);
 
@@ -199,7 +184,6 @@ describe('Computer', function () {
       });
 
       it('finds computer win moves left side of horizontal row', function () {
-        var board = new Board();
         board.setMarker('center', computerMarker);
         board.setMarker('middleRight', computerMarker);
 
@@ -207,7 +191,6 @@ describe('Computer', function () {
       });
 
       it('finds computer win moves top of vertical row', function () {
-        var board = new Board();
         board.setMarker('center', computerMarker);
         board.setMarker('bottomCenter', computerMarker);
 
@@ -220,7 +203,6 @@ describe('Computer', function () {
     describe('filters out moves that would force a user fork move', function () {
 
       it('finds corner moves and filters out moves that force user fork move', function () {
-        var board = new Board();
         board.setMarker('center', computerMarker);
         board.setMarker('bottomCenter', userMarker);
         board.setMarker('topRight', userMarker);
@@ -230,7 +212,6 @@ describe('Computer', function () {
       });
 
       it('finds side moves and filters out moves that force user fork move', function () {
-        var board = new Board();
         board.setMarker('topRight', computerMarker);
         board.setMarker('bottomRight', userMarker);
         board.setMarker('bottomLeft', userMarker);
@@ -244,7 +225,6 @@ describe('Computer', function () {
     describe('finds opposite corner move if user marked center on second move', function () {
 
       it('finds bottomRight corner if topLeft was first move by computer and user move center second move', function () {
-        var board = new Board();
         board.setMarker('topLeft', computerMarker);
         board.setMarker('center', userMarker);
 
@@ -252,7 +232,6 @@ describe('Computer', function () {
       });
 
       it('finds topRight corner if bottomLeft was first move by computer and user move center second move', function () {
-        var board = new Board();
         board.setMarker('bottomLeft', computerMarker);
         board.setMarker('center', userMarker);
 

@@ -2,8 +2,12 @@ var computerMarker = " X ";
 var userMarker  = " O ";
 var blank = "[ ]";
 
-var Board = require('./board');
+var requiredObjBoard;
 
+if(typeof require !== 'undefined'){
+  requiredObjBoard = require('./board');
+  var Board = requiredObjBoard.board;
+}
 
 function Computer (){
   this.selection = null;
@@ -230,4 +234,5 @@ Computer.prototype.selectMove = function(board){
 
 
 
-module.exports = Computer;
+// if(module){module.exports = Computer;}
+if(typeof exports !== 'undefined'){ exports['computer'] = Computer}

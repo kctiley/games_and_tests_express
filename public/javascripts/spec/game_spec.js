@@ -1,10 +1,13 @@
-var Game = require('../src/game');
-var Board = require('../src/board');
-// var User = require('../src/user');
-// var Computer = require('../src/computer');
 var computerMarker = " X ";
 var userMarker  = " O ";
 var blank = "[ ]";
+
+var requiredObjBoard = require('../src/board');
+var Board = requiredObjBoard.board;
+var requiredObjComputer = require('../src/computer');
+var Computer = requiredObjComputer.computer;
+var requiredObjGame = require('../src/game');
+var Game = requiredObjGame.game;
 
   describe('Game', function () {
     
@@ -101,6 +104,7 @@ var blank = "[ ]";
 
       it('should not proceed to next player if move selected was not valid', function () {
         game.start();
+
         game.setMove(userMarker, 'middleRight');
         game.setMove(computerMarker,"bottomCenter");
         game.setMove(userMarker, "bottomCenter");

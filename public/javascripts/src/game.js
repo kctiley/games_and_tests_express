@@ -2,7 +2,12 @@ var computerMarker = " X ";
 var userMarker  = " O ";
 var blank = "[ ]";
 
-var Board = require('./board');
+if(typeof require !== 'undefined'){
+  requiredObjBoard = require('./board');
+  var Board = requiredObjBoard.board;
+  requiredObjComputer = require('./computer');
+  var Computer = requiredObjComputer.computer;
+}
 
 function Game (){
   this.lastMove = {player : null, position : null};
@@ -116,4 +121,5 @@ Game.prototype.nextPlayerGo = function(){
 }
 
 
-module.exports = Game;
+// if(module){module.exports = Game;}
+if(typeof exports !== 'undefined'){ exports['game'] = Game}

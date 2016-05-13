@@ -1,7 +1,3 @@
-// var computerMarker = " X ";
-// var userMarker  = " O ";
-// var blank = "[ ]";
-
 if(typeof require !== 'undefined'){
   var requiredObjBoard = require('./board');
   var Board = requiredObjBoard.board;

@@ -1,7 +1,3 @@
-// var computerMarker = " X ";
-// var userMarker  = " O ";
-// var blank = "[ ]";
-
 if(typeof require !== 'undefined'){
   var requiredObjBoard = require('./board');
   var Board = requiredObjBoard.board;
@@ -62,22 +58,13 @@ Computer.prototype.neighborMap = function(board, playerMarker){
   return data;
 }
 
-Computer.prototype.computerWinMoves = function(board){
+Computer.prototype.winMoves = function(board, playerMarker){
   var result = [];
-  var availablePositions = this.neighborMap(board, computerMarker);
+  var availablePositions = this.neighborMap(board, playerMarker);
   for (position in availablePositions){
     var pstn = availablePositions[position]
     if(pstn){
-      if(pstn.left.same + pstn.right.same == 2){
-        result.push(position)
-      }
-      if(pstn.up.same + pstn.down.same == 2){
-        result.push(position)
-      }
-      if(pstn.upLeft.same + pstn.downRight.same == 2){
-        result.push(position)
-      }
-      if(pstn.upRight.same + pstn.downLeft.same == 2){
+      if(pstn.left.same + pstn.right.same == 2 || pstn.up.same + pstn.down.same == 2 || pstn.upLeft.same + pstn.downRight.same == 2 || pstn.upRight.same + pstn.downLeft.same == 2){
         result.push(position)
       }
     }
@@ -85,27 +72,12 @@ Computer.prototype.computerWinMoves = function(board){
   return result;
 }
 
+Computer.prototype.computerWinMoves = function(board){
+  return this.winMoves(board, computerMarker);
+}
+
 Computer.prototype.userWinMoves = function(board){
-  var result = [];
-  var availablePositions = this.neighborMap(board, userMarker);
-  for (position in availablePositions){
-    var pstn = availablePositions[position]
-    if(pstn){
-      if(pstn.left.same + pstn.right.same == 2){
-        result.push(position)
-      }
-      if(pstn.up.same + pstn.down.same == 2){
-        result.push(position)
-      }
-      if(pstn.upLeft.same + pstn.downRight.same == 2){
-        result.push(position)
-      }
-      if(pstn.upRight.same + pstn.downLeft.same == 2){
-        result.push(position)
-      }
-    }
-  }
-  return result;
+  return this.winMoves(board, userMarker);
 }
 
 Computer.prototype.computerForkMoves = function(board){

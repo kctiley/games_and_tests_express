@@ -123,9 +123,7 @@ Computer.prototype.centerMove = function(board){
   return this.findAvailable(board, ['center']);
 }
 
-
-
-Computer.prototype.oppositeCorner = function(board){
+Computer.prototype.oppositeCornerMove = function(board){
   var result = [];
   var availablePositions = [];
   for (position in board.positions){
@@ -133,17 +131,14 @@ Computer.prototype.oppositeCorner = function(board){
       availablePositions.push(position);
     }
   }
-  if(availablePositions.length == 7 && board.positions.center.marker == userMarker){
-    if(board.positions.topLeft.marker == computerMarker){ result.push('bottomRight')}
-    if(board.positions.topRight.marker == computerMarker){ result.push('bottomLeft')}
-    if(board.positions.bottomRight.marker == computerMarker){ result.push('topLeft')}
-    if(board.positions.bottomLeft.marker == computerMarker){ result.push('topRight')}
+  if(availablePositions.length == 7 && board.positions.center.marker == computerMarker){
+    if(board.positions.topLeft.marker == userMarker){ result.push('bottomRight')}
+    if(board.positions.topRight.marker == userMarker){ result.push('bottomLeft')}
+    if(board.positions.bottomRight.marker == userMarker){ result.push('topLeft')}
+    if(board.positions.bottomLeft.marker == userMarker){ result.push('topRight')}
   }
-
   return result;
 }
-
-
 
 Computer.prototype.cornerMoves = function(board){
   var cornerPositions = ['topLeft', 'topRight', 'bottomRight', 'bottomLeft'];
@@ -194,6 +189,9 @@ Computer.prototype.selectMove = function(board){
   }
   else if(this.centerMove(board).length > 0){
     result = this.centerMove(board)[0];
+  }
+  else if(this.oppositeCornerMove(board).length == 1){
+    result = this.oppositeCornerMove(board)[0];
   }
   else if(this.doesNotForceFork(this.cornerMoves(board), board).length > 0){
     result = this.doesNotForceFork(this.cornerMoves(board), board)[0];

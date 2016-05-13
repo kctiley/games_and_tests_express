@@ -225,17 +225,17 @@ describe('Computer', function () {
     describe('finds opposite corner move if user marked center on second move', function () {
 
       it('finds bottomRight corner if topLeft was first move by computer and user move center second move', function () {
-        board.setMarker('topLeft', computerMarker);
-        board.setMarker('center', userMarker);
+        board.setMarker('topLeft', userMarker);
+        board.setMarker('center', computerMarker);
 
-        expect(computer.oppositeCorner(board)).toContain('bottomRight');
+        expect(computer.oppositeCornerMove(board)).toContain('bottomRight');
       });
 
       it('finds topRight corner if bottomLeft was first move by computer and user move center second move', function () {
-        board.setMarker('bottomLeft', computerMarker);
-        board.setMarker('center', userMarker);
+        board.setMarker('bottomLeft', userMarker);
+        board.setMarker('center', computerMarker);
 
-        expect(computer.oppositeCorner(board)).toContain('topRight');
+        expect(computer.oppositeCornerMove(board)).toContain('topRight');
       });
     });
 

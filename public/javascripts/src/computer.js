@@ -27,46 +27,36 @@ Computer.prototype.findAvailable = function(board, positionsToCheck){
   return availablePositions;
 }
 
-Computer.prototype.neighborsData = function(board, playerMarker){
-  var sameAndBlankCount = function(position, direction){
-    var count = {};
-    count[direction] = {same : 0, blank : 0};
-    var checkNeighbor = function(pstn, direction){
-      if(board.positions[pstn].neighbors[direction]){
-        var neighborPosition = board.positions[pstn].neighbors[direction];
-        if(board.positions[neighborPosition].marker == playerMarker){
-          count[direction].same++;
-        }
-        if(board.positions[neighborPosition].marker == blank){
-          count[direction].blank++;
-        }
-        checkNeighbor(neighborPosition, direction)
+Computer.prototype.markerCount = function(board, position, marker, direction){
+  var result = 0;
+  var checkNeighbor = function(pstn){
+    if(board.positions[pstn].neighbors[direction]){
+      var neighborPosition = board.positions[pstn].neighbors[direction];
+      if(board.positions[neighborPosition].marker == marker){
+        result++;
       }
-    }
-    checkNeighbor(position, direction);
-    return (count)
-  }
-  var data = {};
-  for (position in board.positions){
-    if(board.positions[position].marker == blank){
-      data[position] = {};
-      for (direction in board.positions[position].neighbors){
-        var count = sameAndBlankCount(position, direction);
-        data[position][direction] = count[direction]
-      }
+      checkNeighbor(neighborPosition)
     }
   }
-  return data;
+  checkNeighbor(position);
+  return result;
 }
 
 Computer.prototype.winMoves = function(board, playerMarker){
-  var result = [];
-  var availablePositions = this.neighborsData(board, playerMarker);
-  for (position in availablePositions){
-    var pstn = availablePositions[position]
-    if(pstn){
-      if(pstn.left.same + pstn.right.same == 2 || pstn.up.same + pstn.down.same == 2 || pstn.upLeft.same + pstn.downRight.same == 2 || pstn.upRight.same + pstn.downLeft.same == 2){
-        result.push(position)
+  var result = false;
+  for (position in board.positions){
+    if(board.positions[position].marker == playerMarker){
+      if(this.markerCount(board, playerMarker, 'left') + this.markerCount(board, playerMarker, 'right') == 2){
+        result = playerMarker;
+      }
+      if(this.markerCount(board, playerMarker, 'up') + this.markerCount(board, playerMarker, 'down') == 2){
+        result = playerMarker;
+      }
+      if(this.markerCount(board, playerMarker, 'upLeft') + this.markerCount(board, playerMarker, 'downRight') == 2){
+        result = playerMarker;
+      }
+      if(this.markerCount(board, playerMarker, 'upRight') + this.markerCount(board, playerMarker, 'downLeft') == 2){
+        result = playerMarker;
       }
     }
   }
@@ -109,19 +99,23 @@ Computer.prototype.userForkMoves = function(board){
 
 Computer.prototype.availableTwoInRowMoves = function(board, playerMarker){
   var result = [];
-  var neighborsData = this.neighborsData(board, playerMarker);
-  for(position in neighborsData){
-    var pstn = neighborsData[position];
-    if(pstn.left.same + pstn.right.same == 1 && pstn.left.blank + pstn.right.blank == 1){
-      result.push(position)
-    }
-    if(pstn.up.same + pstn.down.same == 1 && pstn.up.blank + pstn.down.blank == 1){
-      result.push(position)
-    }
-    if(pstn.upLeft.same + pstn.downRight.same == 1 && pstn.upLeft.blank + pstn.downRight.blank == 1){
-      result.push(position)
+  for (position in board.positions){
+    if(board.positions[position].marker == blank){
+      if(this.markerCount(board, position, playerMarker, 'left') + this.markerCount(board, position, playerMarker, 'right') == 1 && this.markerCount(board, position, blank, 'left') + this.markerCount(board, position, blank, 'right') == 1 ){
+        result.push(position);
+      }
+      if(this.markerCount(board, position, playerMarker, 'up') + this.markerCount(board, position, playerMarker, 'down') == 1 && this.markerCount(board, position, blank, 'up') + this.markerCount(board, position, blank, 'down') == 1 ){
+        result.push(position);
+      }
+      if(this.markerCount(board, position, playerMarker, 'upLeft') + this.markerCount(board, position, playerMarker, 'downRight') == 1 && this.markerCount(board, position, blank, 'upLeft') + this.markerCount(board, position, blank, 'downRight') == 1 ){
+        result.push(position);
+      }
+      if(this.markerCount(board, position, playerMarker, 'upRight') + this.markerCount(board, position, playerMarker, 'downLeft') == 1 && this.markerCount(board, position, blank, 'upRight') + this.markerCount(board, position, blank, 'downLeft') == 1 ){
+        result.push(position);
+      }      
     }
   }
+
   return result;
 }
 

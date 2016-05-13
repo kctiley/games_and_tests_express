@@ -44,20 +44,20 @@ Computer.prototype.markerCount = function(board, position, marker, direction){
 
 Computer.prototype.winMoves = function(board, playerMarker){
   var result = [];
+  var thisComputer = this;
   for (position in board.positions){
     if(board.positions[position].marker == blank){
-      if(this.markerCount(board, position, playerMarker, 'left') + this.markerCount(board, position, playerMarker, 'right') == 2){
-        result.push(position);
+
+      var rowCountSame = function(directionA, directionB){
+        var result = thisComputer.markerCount(board, position, playerMarker, directionA) + thisComputer.markerCount(board, position, playerMarker, directionB);
+        return result;
       }
-      if(this.markerCount(board, position, playerMarker, 'up') + this.markerCount(board, position, playerMarker, 'down') == 2){
-        result.push(position);
-      }
-      if(this.markerCount(board, position, playerMarker, 'upLeft') + this.markerCount(board, position, playerMarker, 'downRight') == 2){
-        result.push(position);;
-      }
-      if(this.markerCount(board, position, playerMarker, 'upRight') + this.markerCount(board, position, playerMarker, 'downLeft') == 2){
-        result.push(position);;
-      }
+
+      if(rowCountSame('left', 'right') == 2){result.push(position);}
+      if(rowCountSame('up', 'down') == 2){result.push(position);}
+      if(rowCountSame('upLeft', 'downRight') == 2){result.push(position);}
+      if(rowCountSame('upRight', 'downLeft') == 2){result.push(position);}
+
     }
   }
   return result;
@@ -99,20 +99,23 @@ Computer.prototype.userForkMoves = function(board){
 
 Computer.prototype.twoInRowMoves = function(board, playerMarker){
   var result = [];
+  var thisComputer = this;
   for (position in board.positions){
     if(board.positions[position].marker == blank){
-      if(this.markerCount(board, position, playerMarker, 'left') + this.markerCount(board, position, playerMarker, 'right') == 1 && this.markerCount(board, position, blank, 'left') + this.markerCount(board, position, blank, 'right') == 1 ){
-        result.push(position);
+      var rowCountSame = function(directionA, directionB){
+        var result = thisComputer.markerCount(board, position, playerMarker, directionA) + thisComputer.markerCount(board, position, playerMarker, directionB);
+        return result;
       }
-      if(this.markerCount(board, position, playerMarker, 'up') + this.markerCount(board, position, playerMarker, 'down') == 1 && this.markerCount(board, position, blank, 'up') + this.markerCount(board, position, blank, 'down') == 1 ){
-        result.push(position);
+      var rowCountBlank = function(directionA, directionB){
+        var result = thisComputer.markerCount(board, position, blank, directionA) + thisComputer.markerCount(board, position, blank, directionB);
+        return result;
       }
-      if(this.markerCount(board, position, playerMarker, 'upLeft') + this.markerCount(board, position, playerMarker, 'downRight') == 1 && this.markerCount(board, position, blank, 'upLeft') + this.markerCount(board, position, blank, 'downRight') == 1 ){
-        result.push(position);
-      }
-      if(this.markerCount(board, position, playerMarker, 'upRight') + this.markerCount(board, position, playerMarker, 'downLeft') == 1 && this.markerCount(board, position, blank, 'upRight') + this.markerCount(board, position, blank, 'downLeft') == 1 ){
-        result.push(position);
-      }      
+
+      if(rowCountSame('left', 'right') == 1 && rowCountBlank('left', 'right') == 1){result.push(position);}
+      if(rowCountSame('up', 'down') == 1 && rowCountBlank('up', 'down') == 1){result.push(position);}
+      if(rowCountSame('upLeft', 'downRight') == 1 && rowCountBlank('upLeft', 'downRight') == 1){result.push(position);}
+      if(rowCountSame('upRight', 'downLeft') == 1 && rowCountBlank('upRight', 'downLeft') == 1){result.push(position);}
+
     }
   }
 

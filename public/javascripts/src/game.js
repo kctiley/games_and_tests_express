@@ -57,17 +57,17 @@ Game.prototype.winner = function(){
         neighborCount[direction].blank = 0;
       }
       if(currentPosition.marker == mkr){
-        var mapSameNeighbors = function(pstn){
+        var countSame = function(pstn){
           var neighborPosition = board.positions[pstn]
           if(neighborPosition.neighbors[direction]){
             if(board.positions[neighborPosition.neighbors[direction]].marker == mkr){
               neighborCount[direction].same++;
-              mapSameNeighbors(neighborPosition.neighbors[direction], direction);
+              countSame(neighborPosition.neighbors[direction], direction);
             }
           }
         }
         for(direction in neighborCount){
-          mapSameNeighbors(position);
+          countSame(position);
         }
         if(neighborCount.left.same + neighborCount.right.same == 2 || neighborCount.upLeft.same + neighborCount.downRight.same == 2 || neighborCount.downLeft.same + neighborCount.upRight.same == 2 || neighborCount.up.same + neighborCount.down.same == 2){
           winner = mkr;

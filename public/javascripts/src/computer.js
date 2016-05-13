@@ -85,7 +85,7 @@ Computer.prototype.computerForkMoves = function(board){
 }
 
 Computer.prototype.userForkMoves = function(board){
-  var moves = this.availableTwoInRowMoves(board, userMarker)
+  var moves = this.twoInRowMoves(board, userMarker)
   var result = [];
   var movesCount = {};
   for (position in moves){
@@ -97,7 +97,7 @@ Computer.prototype.userForkMoves = function(board){
   return result;
 }
 
-Computer.prototype.availableTwoInRowMoves = function(board, playerMarker){
+Computer.prototype.twoInRowMoves = function(board, playerMarker){
   var result = [];
   for (position in board.positions){
     if(board.positions[position].marker == blank){
@@ -186,7 +186,7 @@ Computer.prototype.selectMove = function(board){
   else if(this.userWinMoves(board).length > 0){
     result = this.userWinMoves(board)[0];
   }
-  else if(this.doesNotForceFork(this.availableTwoInRowMoves(board), board).length > 0){
+  else if(this.doesNotForceFork(this.twoInRowMoves(board), board).length > 0){
     result = this.doesNotForceFork(this.availableTwoInRowMoves(board), board)[0];
   }
   else if(this.doesNotForceFork(this.userForkMoves(board), board).length > 0){

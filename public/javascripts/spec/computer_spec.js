@@ -62,30 +62,30 @@ describe('Computer', function () {
 
     describe('finds available moves that make two in a row', function () {
       it('initially has no moves that make two in a row', function () {
-        expect(computer.availableTwoInRowMoves(board, computerMarker)).toEqual([]);
+        expect(computer.twoInRowMoves(board, computerMarker)).toEqual([]);
       });
 
       it('finds horizontal moves that make two in a row', function () {
         board.setMarker('middleLeft', computerMarker);
-        expect(computer.availableTwoInRowMoves(board, computerMarker)).toContain('middleRight');
+        expect(computer.twoInRowMoves(board, computerMarker)).toContain('middleRight');
       });
 
       it('finds horizontal moves that make two in a row', function () {
         board.setMarker('topLeft', computerMarker);
-        expect(computer.availableTwoInRowMoves(board, computerMarker)).toContain('topRight');
-        expect(computer.availableTwoInRowMoves(board, computerMarker)).toContain('topCenter');
+        expect(computer.twoInRowMoves(board, computerMarker)).toContain('topRight');
+        expect(computer.twoInRowMoves(board, computerMarker)).toContain('topCenter');
       });
 
   //     it('finds vertical moves that make two in a row', function () {
   //       board.setMarker('topLeft', computerMarker);
-  //       expect(computer.availableTwoInRowMoves(board, computerMarker)).toContain('middleLeft');
-  //       expect(computer.availableTwoInRowMoves(board, computerMarker)).toContain('bottomLeft');
+  //       expect(computer.twoInRowMoves(board, computerMarker)).toContain('middleLeft');
+  //       expect(computer.twoInRowMoves(board, computerMarker)).toContain('bottomLeft');
   //     });
 
   //     it('finds diagonal moves that make two in a row', function () {
   //       board.setMarker('topLeft', computerMarker);
-  //       expect(computer.availableTwoInRowMoves(board, computerMarker)).toContain('center');
-  //       expect(computer.availableTwoInRowMoves(board, computerMarker)).toContain('bottomLeft');
+  //       expect(computer.twoInRowMoves(board, computerMarker)).toContain('center');
+  //       expect(computer.twoInRowMoves(board, computerMarker)).toContain('bottomLeft');
   //     });
       
     }); 

@@ -36,45 +36,41 @@ Game.prototype.availablePositions = function(){
 
 }
 
-Game.prototype.checkForWinner = function(){
+Game.prototype.winner = function(){
   var winner = false;
   var board = this.board;
 
-  var check = function(marker){
-    var mkr = marker;
+  var checkForWin = function(playerMarker){
+    var mkr = playerMarker;
     for (position in board.positions){
-      var objCount = {}; 
-      for (direction in board.positions[position].neighbors){
-        objCount[direction] = {};
-        objCount[direction].same = 0;
-        objCount[direction].blank = 0;
-
+      var neighborCount = {}; 
+      var currentPosition = board.positions[position];
+      for (direction in currentPosition.neighbors){
+        neighborCount[direction] = {};
+        neighborCount[direction].same = 0;
+        neighborCount[direction].blank = 0;
       }
-
-      if(board.positions[position].marker == mkr){
-        var mapNeighbors = function(position, direction){
-          if(board.positions[position].neighbors[direction]){
-            if(board.positions[board.positions[position].neighbors[direction]].marker == mkr){
-              objCount[direction].same++;
-              mapNeighbors(board.positions[position].neighbors[direction], direction);
-            }
-            if(board.positions[board.positions[position].neighbors[direction]].marker == mkr){
-              objCount[direction].blank++;
-              mapNeighbors(board.positions[position].neighbors[direction], direction);
+      if(currentPosition.marker == mkr){
+        var mapSameNeighbors = function(pstn){
+          var neighborPosition = board.positions[pstn]
+          if(neighborPosition.neighbors[direction]){
+            if(board.positions[neighborPosition.neighbors[direction]].marker == mkr){
+              neighborCount[direction].same++;
+              mapSameNeighbors(neighborPosition.neighbors[direction], direction);
             }
           }
         }
-        for(direction in objCount){
-          mapNeighbors(position, direction);
+        for(direction in neighborCount){
+          mapSameNeighbors(position);
         }
-        if(objCount.left.same + objCount.right.same == 2 || objCount.upLeft.same + objCount.downRight.same == 2 || objCount.downLeft.same + objCount.upRight.same == 2 || objCount.up.same + objCount.down.same == 2){
+        if(neighborCount.left.same + neighborCount.right.same == 2 || neighborCount.upLeft.same + neighborCount.downRight.same == 2 || neighborCount.downLeft.same + neighborCount.upRight.same == 2 || neighborCount.up.same + neighborCount.down.same == 2){
           winner = mkr;
         }
       } 
     }
   }
-  check(computerMarker);
-  check(userMarker);
+  checkForWin(computerMarker);
+  checkForWin(userMarker);
   return winner;
 }
 
@@ -90,8 +86,8 @@ Game.prototype.setMove = function(player, position){
 }
 
 Game.prototype.updateGame = function(){
-  if(this.checkForWinner()){
-    var winner = this.checkForWinner();
+  if(this.winner()){
+    var winner = this.winner();
     this.status = "inActive";
     this.showStartButton = true;
     this.message = "Winner is " + winner + "!!";
@@ -110,6 +106,4 @@ Game.prototype.nextPlayerGo = function(){
   this.lastMove.player == userMarker ? this.currentPlayer = computerMarker : this.currentPlayer = userMarker;
 }
 
-
-// if(module){module.exports = Game;}
 if(typeof exports !== 'undefined'){ exports['game'] = Game}

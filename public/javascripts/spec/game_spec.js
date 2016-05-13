@@ -54,7 +54,7 @@ var Game = requiredObjGame.game;
         game.board.positions.center.marker = computerMarker;
         game.board.positions.bottomRight.marker = computerMarker;
 
-        expect(game.checkForWinner()).toEqual(computerMarker);
+        expect(game.winner()).toEqual(computerMarker);
       });
 
       it('should check for a win for userMarker', function () {
@@ -63,7 +63,7 @@ var Game = requiredObjGame.game;
         game.board.positions.center.marker = userMarker;
         game.board.positions.bottomCenter.marker = userMarker;
 
-        expect(game.checkForWinner(game.board)).toEqual(userMarker);
+        expect(game.winner()).toEqual(userMarker);
       });
 
       it('should set last move data', function () {

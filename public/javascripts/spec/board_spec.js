@@ -5,12 +5,11 @@ var blank = "[ ]";
 var requiredObj = require('../src/board');
 var Board = requiredObj.board;
 
-var board;
-beforeEach(function(){
-  board = new Board();
-})
-
 describe('Board', function () {
+  var board;
+  beforeEach(function(){
+    board = new Board();
+  })
   
   describe('constructor', function () {
     

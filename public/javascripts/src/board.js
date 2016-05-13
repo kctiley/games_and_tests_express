@@ -1,3 +1,16 @@
+if(typeof require !== 'undefined'){
+  var requiredObjMarkers = require('./markers');
+  var markers = requiredObjMarkers.markers;
+  var computerMarker = markers.computerMarker;
+  var userMarker  = markers.userMarker;
+  var blank = markers.blank;
+}
+else{
+  var computerMarker = markers.computerMarker;
+  var userMarker  = markers.userMarker;
+  var blank = markers.blank;
+}
+
 function Board(existingBoardPositions) {
   var blank = "[ ]";
 // changing board creation

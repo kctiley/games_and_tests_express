@@ -27,31 +27,32 @@ Computer.prototype.findAvailable = function(board, positionsToCheck){
   return availablePositions;
 }
 
-Computer.prototype.neighborMap = function(board, playerMarker){
-  var checkDirection = function(position, direction){
-    var neighborCounts = {};
-    neighborCounts[direction] = {same : 0, blank : 0};
+Computer.prototype.neighborsData = function(board, playerMarker){
+  var sameAndBlankCount = function(position, direction){
+    var count = {};
+    count[direction] = {same : 0, blank : 0};
     var checkNeighbor = function(pstn, direction){
       if(board.positions[pstn].neighbors[direction]){
         var neighborPosition = board.positions[pstn].neighbors[direction];
         if(board.positions[neighborPosition].marker == playerMarker){
-          neighborCounts[direction].same++;
+          count[direction].same++;
         }
         if(board.positions[neighborPosition].marker == blank){
-          neighborCounts[direction].blank++;
+          count[direction].blank++;
         }
         checkNeighbor(neighborPosition, direction)
       }
     }
     checkNeighbor(position, direction);
-    return (neighborCounts)
+    return (count)
   }
   var data = {};
   for (position in board.positions){
     if(board.positions[position].marker == blank){
       data[position] = {};
       for (direction in board.positions[position].neighbors){
-        data[position][direction] = checkDirection(position, direction)[direction]
+        var count = sameAndBlankCount(position, direction);
+        data[position][direction] = count[direction]
       }
     }
   }
@@ -60,7 +61,7 @@ Computer.prototype.neighborMap = function(board, playerMarker){
 
 Computer.prototype.winMoves = function(board, playerMarker){
   var result = [];
-  var availablePositions = this.neighborMap(board, playerMarker);
+  var availablePositions = this.neighborsData(board, playerMarker);
   for (position in availablePositions){
     var pstn = availablePositions[position]
     if(pstn){
@@ -108,7 +109,7 @@ Computer.prototype.userForkMoves = function(board){
 
 Computer.prototype.availableTwoInRowMoves = function(board, playerMarker){
   var result = [];
-  var neighborsData = this. neighborMap(board, playerMarker);
+  var neighborsData = this.neighborsData(board, playerMarker);
   for(position in neighborsData){
     var pstn = neighborsData[position];
     if(pstn.left.same + pstn.right.same == 1 && pstn.left.blank + pstn.right.blank == 1){

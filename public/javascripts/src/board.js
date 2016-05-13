@@ -1,4 +1,4 @@
-var Board = function (existingBoardPositions) {
+function Board(existingBoardPositions) {
   var blank = "[ ]";
 // changing board creation
     this.positions = {

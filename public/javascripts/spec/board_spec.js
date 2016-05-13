@@ -1,5 +1,5 @@
-var x = " X ";
-var o = " O ";
+var player1Marker = " X ";
+var player2Marker = " O ";
 var blank = "[ ]";
 
 var requiredObj = require('../src/board');
@@ -33,10 +33,10 @@ describe('Board', function () {
 
     it('has positions with initial markers that reflect markers of positions are provided when positions argument is used to create an instance of the board', function () {
       var board1 = new Board();
-      board1.positions.topLeft.marker = x;
+      board1.positions.topLeft.marker = player1Marker;
       var board2 = new Board(board1.positions);
 
-      expect(board2.positions.topLeft.marker).toEqual(x);
+      expect(board2.positions.topLeft.marker).toEqual(player1Marker);
     });
   });
 
@@ -44,8 +44,8 @@ describe('Board', function () {
     
     describe('setMarker', function () {
       it('sets marker', function () {
-        board.setMarker("center", x);
-        expect(board.positions.center.marker).toEqual(' X ');
+        board.setMarker("center", player1Marker);
+        expect(board.positions.center.marker).toEqual(player1Marker);
       });
 
     });

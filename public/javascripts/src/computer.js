@@ -43,20 +43,20 @@ Computer.prototype.markerCount = function(board, position, marker, direction){
 }
 
 Computer.prototype.winMoves = function(board, playerMarker){
-  var result = false;
+  var result = [];
   for (position in board.positions){
-    if(board.positions[position].marker == playerMarker){
-      if(this.markerCount(board, playerMarker, 'left') + this.markerCount(board, playerMarker, 'right') == 2){
-        result = playerMarker;
+    if(board.positions[position].marker == blank){
+      if(this.markerCount(board, position, playerMarker, 'left') + this.markerCount(board, position, playerMarker, 'right') == 2){
+        result.push(position);
       }
-      if(this.markerCount(board, playerMarker, 'up') + this.markerCount(board, playerMarker, 'down') == 2){
-        result = playerMarker;
+      if(this.markerCount(board, position, playerMarker, 'up') + this.markerCount(board, position, playerMarker, 'down') == 2){
+        result.push(position);
       }
-      if(this.markerCount(board, playerMarker, 'upLeft') + this.markerCount(board, playerMarker, 'downRight') == 2){
-        result = playerMarker;
+      if(this.markerCount(board, position, playerMarker, 'upLeft') + this.markerCount(board, position, playerMarker, 'downRight') == 2){
+        result.push(position);;
       }
-      if(this.markerCount(board, playerMarker, 'upRight') + this.markerCount(board, playerMarker, 'downLeft') == 2){
-        result = playerMarker;
+      if(this.markerCount(board, position, playerMarker, 'upRight') + this.markerCount(board, position, playerMarker, 'downLeft') == 2){
+        result.push(position);;
       }
     }
   }
@@ -72,7 +72,7 @@ Computer.prototype.userWinMoves = function(board){
 }
 
 Computer.prototype.computerForkMoves = function(board){
-  var moves = this.availableTwoInRowMoves(board, computerMarker)
+  var moves = this.twoInRowMoves(board, computerMarker)
   var result = [];
   var movesCount = {};
   for (position in moves){
@@ -119,7 +119,7 @@ Computer.prototype.twoInRowMoves = function(board, playerMarker){
   return result;
 }
 
-Computer.prototype.availableCenter = function(board){
+Computer.prototype.centerMove = function(board){
   return this.findAvailable(board, ['center']);
 }
 
@@ -145,7 +145,7 @@ Computer.prototype.oppositeCorner = function(board){
 
 
 
-Computer.prototype.availableCorners = function(board){
+Computer.prototype.cornerMoves = function(board){
   var cornerPositions = ['topLeft', 'topRight', 'bottomRight', 'bottomLeft'];
   return this.findAvailable(board, cornerPositions);
 }
@@ -192,11 +192,11 @@ Computer.prototype.selectMove = function(board){
   else if(this.doesNotForceFork(this.userForkMoves(board), board).length > 0){
     result = this.doesNotForceFork(this.userForkMoves(board), board)[0];
   }
-  else if(this.availableCenter(board).length > 0){
-    result = this.availableCenter(board)[0];
+  else if(this.centerMove(board).length > 0){
+    result = this.centerMove(board)[0];
   }
-  else if(this.doesNotForceFork(this.availableCorners(board), board).length > 0){
-    result = this.doesNotForceFork(this.availableCorners(board), board)[0];
+  else if(this.doesNotForceFork(this.cornerMoves(board), board).length > 0){
+    result = this.doesNotForceFork(this.cornerMoves(board), board)[0];
   }
   else if(this.doesNotForceFork(this.availableSides(board), board).length > 0){result = this.doesNotForceFork(this.availableSides(board), board)[0];
   }

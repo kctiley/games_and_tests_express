@@ -2,10 +2,8 @@ var computerMarker = " X ";
 var userMarker  = " O ";
 var blank = "[ ]";
 
-var requiredObjBoard;
-
 if(typeof require !== 'undefined'){
-  requiredObjBoard = require('./board');
+  var requiredObjBoard = require('./board');
   var Board = requiredObjBoard.board;
 }
 
@@ -23,27 +21,24 @@ Computer.prototype.findAvailable = function(board, positionsToCheck){
   return availablePositions;
 }
 
-
-
-Computer.prototype.neighborDirectionData = function(board, playerMarker){
+Computer.prototype.neighborMap = function(board, playerMarker){
   var checkDirection = function(position, direction){
-    var directionCounts = {};
-    directionCounts[direction] = {same : 0, blank : 0};
-    var homePosition = position;
+    var neighborCounts = {};
+    neighborCounts[direction] = {same : 0, blank : 0};
     var checkNeighbor = function(pstn, direction){
       if(board.positions[pstn].neighbors[direction]){
         var neighborPosition = board.positions[pstn].neighbors[direction];
         if(board.positions[neighborPosition].marker == playerMarker){
-          directionCounts[direction].same++;
+          neighborCounts[direction].same++;
         }
         if(board.positions[neighborPosition].marker == blank){
-          directionCounts[direction].blank++;
+          neighborCounts[direction].blank++;
         }
         checkNeighbor(neighborPosition, direction)
       }
     }
-    checkNeighbor(homePosition, direction);
-    return (directionCounts)
+    checkNeighbor(position, direction);
+    return (neighborCounts)
   }
   var data = {};
   for (position in board.positions){
@@ -59,7 +54,7 @@ Computer.prototype.neighborDirectionData = function(board, playerMarker){
 
 Computer.prototype.computerWinMoves = function(board){
   var result = [];
-  var availablePositions = this.neighborDirectionData(board, computerMarker);
+  var availablePositions = this.neighborMap(board, computerMarker);
   for (position in availablePositions){
     var pstn = availablePositions[position]
     if(pstn){
@@ -82,7 +77,7 @@ Computer.prototype.computerWinMoves = function(board){
 
 Computer.prototype.userWinMoves = function(board){
   var result = [];
-  var availablePositions = this.neighborDirectionData(board, userMarker);
+  var availablePositions = this.neighborMap(board, userMarker);
   for (position in availablePositions){
     var pstn = availablePositions[position]
     if(pstn){
@@ -131,7 +126,7 @@ Computer.prototype.userForkMoves = function(board){
 
 Computer.prototype.availableTwoInRowMoves = function(board, playerMarker){
   var result = [];
-  var neighborsData = this. neighborDirectionData(board, playerMarker);
+  var neighborsData = this. neighborMap(board, playerMarker);
   for(position in neighborsData){
     var pstn = neighborsData[position];
     if(pstn.left.same + pstn.right.same == 1 && pstn.left.blank + pstn.right.blank == 1){
@@ -232,7 +227,4 @@ Computer.prototype.selectMove = function(board){
   return result;
 }
 
-
-
-// if(module){module.exports = Computer;}
 if(typeof exports !== 'undefined'){ exports['computer'] = Computer}

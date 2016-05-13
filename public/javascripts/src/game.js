@@ -3,9 +3,9 @@ var userMarker  = " O ";
 var blank = "[ ]";
 
 if(typeof require !== 'undefined'){
-  requiredObjBoard = require('./board');
+  var requiredObjBoard = require('./board');
   var Board = requiredObjBoard.board;
-  requiredObjComputer = require('./computer');
+  var requiredObjComputer = require('./computer');
   var Computer = requiredObjComputer.computer;
 }
 

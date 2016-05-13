@@ -52,32 +52,22 @@ Game.prototype.checkForWinner = function(){
       }
 
       if(board.positions[position].marker == mkr){
-        var checkNeighbors = function(position, direction){
+        var mapNeighbors = function(position, direction){
           if(board.positions[position].neighbors[direction]){
             if(board.positions[board.positions[position].neighbors[direction]].marker == mkr){
               objCount[direction].same++;
-              checkNeighbors(board.positions[position].neighbors[direction], direction);
+              mapNeighbors(board.positions[position].neighbors[direction], direction);
             }
             if(board.positions[board.positions[position].neighbors[direction]].marker == mkr){
               objCount[direction].blank++;
-              checkNeighbors(board.positions[position].neighbors[direction], direction);
+              mapNeighbors(board.positions[position].neighbors[direction], direction);
             }
           }
         }
         for(direction in objCount){
-          checkNeighbors(position, direction);
+          mapNeighbors(position, direction);
         }
-
-        if(objCount.left.same + objCount.right.same == 2){
-          winner = mkr;
-        }
-        if(objCount.upLeft.same + objCount.downRight.same == 2){
-          winner = mkr;
-        }
-        if(objCount.downLeft.same + objCount.upRight.same == 2){
-          winner = mkr;
-        }
-        if(objCount.up.same + objCount.down.same == 2){
+        if(objCount.left.same + objCount.right.same == 2 || objCount.upLeft.same + objCount.downRight.same == 2 || objCount.downLeft.same + objCount.upRight.same == 2 || objCount.up.same + objCount.down.same == 2){
           winner = mkr;
         }
       } 
